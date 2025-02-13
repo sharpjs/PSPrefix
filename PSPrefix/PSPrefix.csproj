@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Copyright Subatomix Research Inc.
+    SPDX-License-Identifier: MIT
+  -->
+
+  <PropertyGroup>
+    <Description>Prefixes output with the elapsed time or a custom header. Good for long-running, potentially parallel tasks.</Description>
+    <PackageOutputPath>$(PackageOutputRoot)modules</PackageOutputPath>
+    <PackageTags>
+      PSHost Host Task Output Color Colour
+      PSEdition_Core Windows Linux MacOS
+    </PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Subatomix.Build.Packaging.PowerShellModule" PrivateAssets="all" />
+    <PackageReference Include="System.Management.Automation"               PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="$(PowerShellItemIncludes)" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+  </ItemGroup>
+
+</Project>

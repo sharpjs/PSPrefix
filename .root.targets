@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets/3.7.56">
+  <!-- https://github.com/microsoft/MSBuildSdks/tree/main/src/NoTargets -->
+
+  <!--
+    Copyright Subatomix Research Inc.
+    SPDX-License-Identifier: MIT
+  -->
+
+  <PropertyGroup>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <IsPublishable>false</IsPublishable>
+    <IsPackable>false</IsPackable>
+    <DefaultItemExcludesInProjectFolder>
+      PSPrefix*\**;
+      coverage\**;
+      dist\**;
+      $(DefaultItemExcludesInProjectFolder)
+    </DefaultItemExcludesInProjectFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="**"    Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);$(MSBuildThisFile)" />
+    <None Include=".*\**" Exclude=".git\**;.vs\**" />
+  </ItemGroup>
+
+</Project>

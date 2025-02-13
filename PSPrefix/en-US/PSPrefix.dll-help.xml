@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<helpItems schema="maml"
+            xmlns="http://msh"
+       xmlns:maml="http://schemas.microsoft.com/maml/2004/10"
+    xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10"
+        xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10">
+
+  <!-- 
+    Copyright Subatomix Research Inc.
+    SPDX-License-Identifier: MIT
+
+    Documentation:
+    https://docs.microsoft.com/en-us/powershell/developer/help/how-to-create-the-cmdlet-help-file
+  -->
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Get-SynchronizedHost -->
+
+  <command:command>
+
+    <command:details>
+      <command:name>Get-SynchronizedHost</command:name>
+      <maml:description>
+        <maml:para>Gets a thread-safe object that represents the current host program.</maml:para>
+      </maml:description>
+      <maml:copyright><maml:para/></maml:copyright>
+      <command:verb>Get</command:verb>
+      <command:noun>SynchronizedHost</command:noun>
+      <dev:version/>
+    </command:details>
+
+    <maml:description>
+      <maml:para>
+        The Get-SynchronizedHost cmdlet gets a thread-safe object that represents the program that is hosting PowerShell.  The cmdlet is similar to the built-in Get-Host cmdlet and $Host variable, except that Get-SynchronizedHost returns a thread-safe object.  The thread-safe object is suitable for operations that span multiple threads, such as those involving the ForEach-Object -Parallel cmdlet.
+      </maml:para>
+    </maml:description>
+
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-SynchronizedHost</maml:name>
+      </command:syntaxItem>
+    </command:syntax>
+
+    <command:parameters/>
+
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>This cmdlet does not accept pipeline input.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>PSPrefix.Internal.SynchronizedHost</maml:name>
+          <maml:uri></maml:uri>
+        </dev:type>
+        <maml:description>
+          <maml:para>This cmdlet outputs a thread-safe object that represents the program that is hosting PowerShell.</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+
+    <command:terminatingErrors/>
+    <command:nonTerminatingErrors/>
+
+    <maml:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>GitHub repository:</maml:linkText>
+        <maml:uri>https://github.com/sharpjs/PSPrefix</maml:uri>
+      </maml:navigationLink>
+    </maml:relatedLinks>
+
+  </command:command>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Show-Elapsed -->
+
+  <command:command>
+
+    <command:details>
+      <command:name>Show-Elapsed</command:name>
+      <maml:description>
+        <maml:para>Runs commands, prefixing output lines with the elapsed time.</maml:para>
+      </maml:description>
+      <maml:copyright><maml:para/></maml:copyright>
+      <command:verb>Show</command:verb>
+      <command:noun>Elapsed</command:noun>
+      <dev:version/>
+    </command:details>
+
+    <maml:description>
+      <maml:para>
+        The Show-Elapsed cmdlet runs the commands of a script block and prefixes each line of output with a header showing the time that has elapsed since the cmdlet invocation began.  To add a custom prefix instead of the elapsed time, use the Show-Prefix cmdlet.  Use the Show-Elapsed and Show-Prefixed cmdlets together to improve the output of long-running, multi-stage operations.
+      </maml:para>
+      <maml:para>
+        When less than one day has elapsed, the header has the format '[+hh:mm:ss] '.  After one day has elapsed, the header has the format '[+d.hh:mm:ss] '.
+      </maml:para>
+      <maml:para>
+        The Show-Elapsed cmdlet works by invoking a script block in a new runspace on the current thread.  By default, the script block begins execution with no modules imported, regardless of any modules already imported in the invoking PowerShell session.  To pre-import modules into the script block's runspace, use the -Module parameter.  Alternatively, the script block can import import modules as needed using the Import-Module cmdlet.
+      </maml:para>
+      <maml:para>
+        Likewise, by default, the script block begins execution with only the default PowerShell variables defined, with no access to any variables defined in the invoking PowerShell session.  To pass variables from the invoking session into the script block's runspace, use the -Variable parameter.
+      </maml:para>
+    </maml:description>
+
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Show-Elapsed</maml:name>
+        <command:parameter required="true" position="0" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>ScriptBlock</maml:name>
+          <maml:description/>
+          <command:parameterValue required="true" variableLength="false">ScriptBlock</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>Module</maml:name>
+          <maml:description/>
+          <command:parameterValue required="true" variableLength="true">Object[]</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>Variable</maml:name>
+          <maml:description/>
+          <command:parameterValue required="true" variableLength="true">Object[]</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>CustomHost</maml:name>
+          <maml:description/>
+          <command:parameterValue required="true" variableLength="false">PSHost</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>PassThru</maml:name>
+          <maml:description/>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+
+    <command:parameters>
+
+      <command:parameter required="true" position="0" pipelineInput="False" globbing="false" variableLength="false">
+        <maml:name>ScriptBlock</maml:name>
+        <maml:description>
+          <maml:para>Specifies the commands to run. Enclose the commands in braces { } to create a script block.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Management.Automation.ScriptBlock</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.ScriptBlock</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+
+      <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+        <maml:name>Module</maml:name>
+        <maml:description>
+          <maml:para>Specifies modules to import before running the script block.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Object[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+
+      <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+        <maml:name>Variable</maml:name>
+        <maml:description>
+          <maml:para>Specifies variables to define before running the script block.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Object[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+
+      <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+        <maml:name>CustomHost</maml:name>
+        <maml:description>
+          <maml:para>Specifies a custom host to which prefixed output should flow.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
+        <dev:type>
+          <maml:name>PSHost</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+
+      <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
+          <maml:para>Causes the output stream of the script block to flow to the output stream of the Show-Elapsed cmdlet.</maml:para>
+        </maml:description>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+
+    </command:parameters>
+
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>This cmdlet does not accept pipeline input.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSObject</maml:name>
+          <maml:uri></maml:uri>
+        </dev:type>
+        <maml:description>
+          <maml:para>This cmdlet returns the objects that are produced by the script block.</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+
+    <command:terminatingErrors/>
+    <command:nonTerminatingErrors/>
+
+    <maml:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Show-Prefixed</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>GitHub repository:</maml:linkText>
+        <maml:uri>https://github.com/sharpjs/PSPrefix</maml:uri>
+      </maml:navigationLink>
+    </maml:relatedLinks>
+
+  </command:command>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- Show-Prefixed -->
+
+  <command:command>
+
+    <command:details>
+      <command:name>Show-Prefixed</command:name>
+      <maml:description>
+        <maml:para>Runs commands, prefixing each line of output with a custom header.</maml:para>
+      </maml:description>
+      <maml:copyright><maml:para/></maml:copyright>
+      <command:verb>Show</command:verb>
+      <command:noun>Prefixed</command:noun>
+      <dev:version/>
+    </command:details>
+
+    <maml:description>
+      <maml:para>
+        The Show-Prefixed cmdlet runs the commands of a script block and prefixes each line of output with a custom header.  To add an elapsed-time prefix instead of a custom string, use the Show-Elapsed cmdlet.  Use the Show-Elapsed and Show-Prefixed cmdlets together to improve the output of long-running, multi-stage operations.
+      </maml:para>
+      <maml:para>
+        The Show-Prefixed cmdlet works by invoking a script block in a new runspace on the current thread.  By default, the script block begins execution with no modules imported, regardless of any modules already imported in the invoking PowerShell session.  To pre-import modules into the script block's runspace, use the -Module parameter.  Alternatively, the script block can import import modules as needed using the Import-Module cmdlet.
+      </maml:para>
+      <maml:para>
+        Likewise, by default, the script block begins execution with only the default PowerShell variables defined, with no access to any variables defined in the invoking PowerShell session.  To pass variables from the invoking session into the script block's runspace, use the -Variable parameter.
+      </maml:para>
+    </maml:description>
+
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Show-Prefixed</maml:name>
+        <command:parameter required="true" position="0" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>Name</maml:name>
+          <maml:description/>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="true" position="1" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>ScriptBlock</maml:name>
+          <maml:description/>
+          <command:parameterValue required="true" variableLength="false">ScriptBlock</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>Module</maml:name>
+          <maml:description/>
+          <command:parameterValue required="true" variableLength="true">Object[]</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>Variable</maml:name>
+          <maml:description/>
+          <command:parameterValue required="true" variableLength="true">Object[]</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>CustomHost</maml:name>
+          <maml:description/>
+          <command:parameterValue required="true" variableLength="false">PSHost</command:parameterValue>
+        </command:parameter>
+        <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+          <maml:name>PassThru</maml:name>
+          <maml:description/>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+
+    <command:parameters>
+
+      <command:parameter required="true" position="0" pipelineInput="True (ByPropertyName)" globbing="false" variableLength="false">
+        <maml:name>Name</maml:name>
+        <maml:description>
+          <maml:para>Sets prefix.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+
+      <command:parameter required="true" position="1" pipelineInput="True (ByPropertyName)" globbing="false" variableLength="false">
+        <maml:name>ScriptBlock</maml:name>
+        <maml:description>
+          <maml:para>Specifies the commands to run. Enclose the commands in braces { } to create a script block.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Management.Automation.ScriptBlock</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.ScriptBlock</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+
+      <command:parameter required="false" position="named" pipelineInput="True (ByPropertyName)" globbing="false" variableLength="false">
+        <maml:name>Module</maml:name>
+        <maml:description>
+          <maml:para>Specifies modules to import before running the script block.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Object[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+
+      <command:parameter required="false" position="named" pipelineInput="True (ByPropertyName)" globbing="false" variableLength="false">
+        <maml:name>Variable</maml:name>
+        <maml:description>
+          <maml:para>Specifies variables to define before running the script block.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Object[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+
+      <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+        <maml:name>CustomHost</maml:name>
+        <maml:description>
+          <maml:para>Specifies a custom host to which prefixed output should flow.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
+        <dev:type>
+          <maml:name>PSHost</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+
+      <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+        <maml:name>PassThru</maml:name>
+        <maml:description>
+          <maml:para>Causes the output stream of the script block to flow to the output stream of the Show-Elapsed cmdlet.</maml:para>
+        </maml:description>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+
+    </command:parameters>
+
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+          <maml:uri />
+        </dev:type>
+        <maml:description>
+          <maml:para>This cmdlet does not accept pipeline input.</maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSObject</maml:name>
+          <maml:uri></maml:uri>
+        </dev:type>
+        <maml:description>
+          <maml:para>This cmdlet returns the objects that are produced by the script block.</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+
+    <command:terminatingErrors/>
+    <command:nonTerminatingErrors/>
+
+    <maml:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Show-Elapsed</maml:linkText>
+        <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>GitHub repository:</maml:linkText>
+        <maml:uri>https://github.com/sharpjs/PSPrefix</maml:uri>
+      </maml:navigationLink>
+    </maml:relatedLinks>
+
+  </command:command>
+
+</helpItems>

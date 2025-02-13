@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Copyright Subatomix Research Inc.
+    SPDX-License-Identifier: MIT
+  -->
+
+  <PropertyGroup>
+    <Description>Teste suite for PSPrefix.</Description>
+    <RootNamespace>PSPrefix</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DotStuff" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" />
+    <PackageReference Include="Shouldly" />
+    <PackageReference Include="Subatomix.Testing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PSPrefix\PSPrefix.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Shouldly" />
+  </ItemGroup>
+
+</Project>

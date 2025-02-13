@@ -1,0 +1,35 @@
+<Project>
+
+  <!--
+    Copyright Subatomix Research Inc.
+    SPDX-License-Identifier: MIT
+  -->
+
+  <!--
+    Central Package Management
+    https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management
+  -->
+
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageVersion Include="Shouldly"                                   Version="4.3.0" />
+    <PackageVersion Include="Subatomix.Build.Packaging.PowerShellModule" Version="1.1.1" />
+    <PackageVersion Include="Subatomix.Testing"                          Version="3.1.0" />
+    <PackageVersion Include="Microsoft.PowerShell.SDK"                   Version="[7.2.24, 7.3.0)" />
+    <PackageVersion Include="System.Management.Automation"               Version="[7.2.0,  7.3.0)" />
+    <PackageVersion Include="DotStuff"                                   Version="0.0.0-pre.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <GlobalPackageReference Include="SauceControl.InheritDoc"             Version="2.0.2" />
+    <GlobalPackageReference Include="Subatomix.Build.Versioning.Semantic" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTestProject)' != 'true'">
+    <GlobalPackageReference Include="Microsoft.SourceLink.GitHub"         Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,41 @@
+<Project>
+
+  <!--
+    Copyright Subatomix Research Inc.
+    SPDX-License-Identifier: MIT
+  -->
+
+  <!--
+    * Imported late: project -> SDK .targets -> NuGet package .targets -> this
+    * Override properties and targets here.
+    https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build
+  -->
+
+  <ItemGroup Condition="'$(IsPackable)' == 'true'">
+    <None Include="..\icon.png" Link="Properties\icon.png"
+          Pack="true" PackagePath="" CopyToOutputDirectory="Never" />
+    <None Include="..\LICENSE.txt" Link="Properties\LICENSE.txt"
+          Pack="true" PackagePath="$(PackageLicenseFile)" CopyToOutputDirectory="Never" />
+    <None Include="..\README.md" Link="Properties\README.md"
+          Pack="true" PackagePath="$(PackageReadmeFile)" CopyToOutputDirectory="Never" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="PSPrefix.Tests" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+    <!-- Required for Moq to mock a class with an internal abstract method. -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="System.Diagnostics.CodeAnalysis" />
+    <Using Include="System.Management.Automation" />
+    <Using Include="System.Management.Automation.Host" />
+    <Using Include="System.Management.Automation.Runspaces" />
+    <Using Include="PSPrefix.Internal" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Remove="System.Net.Http" />
+  </ItemGroup>
+
+</Project>
