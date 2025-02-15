@@ -1,0 +1,12 @@
+[
+  {
+    "Name": "PowerShell",
+    "Projects": [
+      {
+        "Path": "PSPrefix\\PSPrefix.csproj",
+        "Action": "Start",
+        "DebugTarget": "PowerShell"
+      }
+    ]
+  }
+]
