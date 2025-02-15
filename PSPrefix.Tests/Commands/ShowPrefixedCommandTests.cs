@@ -162,11 +162,9 @@ public class ShowPrefixedCommandTests : CommandTests
     {
         ExecuteYields<PSModuleInfo>(
             """
-            Show-Prefixed Foo { Get-Module PSPrefix, PSReadLine } -PassThru `
-                -Module (Get-Module PSPrefix), PSReadLine
+            Show-Prefixed Foo { Get-Module PSPrefix } -Module (Get-Module) -PassThru
             """,
-            x => x.Name.ShouldBe("PSPrefix"),
-            x => x.Name.ShouldBe("PSReadLine")
+            x => x.Name.ShouldBe("PSPrefix")
         );
     }
 

@@ -143,7 +143,7 @@ public class ShowElapsedCommandTests : CommandTests
     public void Invoke_Module()
     {
         var obj = ExecuteSingle(
-            "Show-Prefixed Foo { Get-Module PSReadLine } -Module (Get-Module PSPrefix), PSReadLine -PassThru"
+            "Show-Elapsed { Get-Module PSPrefix } -Module (Get-Module) -PassThru"
         );
 
         obj.ShouldBeOfType<PSModuleInfo>();
@@ -153,7 +153,7 @@ public class ShowElapsedCommandTests : CommandTests
     public void Invoke_Variable()
     {
         var obj = ExecuteSingle(
-            "$x = 42; Show-Prefixed Foo { $x + 1 } -Variable x -PassThru"
+            "$x = 42; Show-Elapsed { $x + 1 } -Variable x -PassThru"
         );
 
         obj.ShouldBe(43);
