@@ -14,8 +14,8 @@ PSPrefix provides three cmdlets:
 
 [![Build](https://github.com/sharpjs/PSPrefix/workflows/Build/badge.svg)](https://github.com/sharpjs/PSPrefix/actions)
 [![Build](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](https://github.com/sharpjs/PSPrefix/actions)
-[![PSGallery](https://img.shields.io/powershellgallery/v/TaskHost.svg)](https://www.powershellgallery.com/packages/TaskHost)
-[![PSGallery](https://img.shields.io/powershellgallery/dt/TaskHost.svg)](https://www.powershellgallery.com/packages/TaskHost)
+[![PSGallery](https://img.shields.io/powershellgallery/v/PSPrefix.svg)](https://www.powershellgallery.com/packages/PSPrefix)
+[![PSGallery](https://img.shields.io/powershellgallery/dt/PSPrefix.svg)](https://www.powershellgallery.com/packages/PSPrefix)
 
 ## Installation
 
