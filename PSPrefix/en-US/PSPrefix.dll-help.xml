@@ -98,7 +98,7 @@
 
     <maml:description>
       <maml:para>
-        The Show-Elapsed cmdlet runs the commands of a script block and prefixes each line of output with a header showing the time that has elapsed since the cmdlet invocation began.  To add a custom prefix instead of the elapsed time, use the Show-Prefix cmdlet.  Use the Show-Elapsed and Show-Prefixed cmdlets together to improve the output of long-running, multi-stage operations.
+        The Show-Elapsed cmdlet runs the commands of a script block and prefixes each line of output with a header showing the time that has elapsed since the cmdlet invocation began.  To add a custom prefix instead of the elapsed time, use the Show-Prefixed cmdlet.  Use the Show-Elapsed and Show-Prefixed cmdlets together to improve the output of long-running, multi-stage operations.
       </maml:para>
       <maml:para>
         When less than one day has elapsed, the header has the format '[+hh:mm:ss] '.  After one day has elapsed, the header has the format '[+d.hh:mm:ss] '.

@@ -35,7 +35,7 @@ Update-Module PSPrefix -AllowPrerelease
 
 ### The Basics
 
-To prefix command output with an abitrary string, use the `Show-Prefix` cmdlet.
+To prefix command output with an abitrary string, use the `Show-Prefixed` cmdlet.
 
 ```pwsh
 Show-Prefixed "Foo" {
@@ -59,8 +59,8 @@ The cmdlets can be combined.
 
 ```pwsh
 Show-Elapsed {
-    Show-Prefix Foo {
-        Show-Prefix Bar {
+    Show-Prefixed Foo {
+        Show-Prefixed Bar {
             # your commands here
         }
     }
@@ -138,7 +138,7 @@ script.
 
 PSPrefix is designed to add clarity to the output of long-running, parallel
 operations.  The `Show-Elapsed` cmdlet provides relative time information.
-The `Show-Prefix` cmdlet can differentiate output from separate tasks.
+The `Show-Prefixed` cmdlet can differentiate output from separate tasks.
 Together, the cmdlets can help to detangle webs of intermingled output from
 multiple threads.
 
