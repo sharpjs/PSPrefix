@@ -142,37 +142,51 @@ The `Show-Prefixed` cmdlet can differentiate output from separate tasks.
 Together, the cmdlets can help to detangle webs of intermingled output from
 multiple threads.
 
-One trick is required when using the cmdlets in parallel multithreaded
-scenarios.  The cmdlets work via custom `PSHost` implementations, but that
-technique does not work inside `ForEach-Object -Parallel` script blocks, due to
-how the latter cmdlet is implemented.  To work around this limitation, PSPrefix
-provides a pair of features.
+Imagine this scenario that runs a command four times in parallel:
 
-First, PSPrefix provides a `Get-SynchronizedHost` cmdlet that returns a wrapper
-over the current `$Host` object that makes the host safe to share across
-threads.
+```pwsh
+1..4 | ForEach-Object -Parallel {
+    Write-Host "example command output"
+}
+```
 
-Second, the `Show-Elapsed` and `Show-Prefixed` cmdlets have a `-CustomHost`
-parameter that accepts a host object to use instead of the current `$Host`
-object.
+![Output of the parallel example above: four identical lines of text.](https://raw.githubusercontent.com/sharpjs/PSPrefix/main/img/output-parallel-unprefixed.png) 
 
-To use `ForEach-Object -Parallel` with `Show-Elapsed` or `Show-Prefixed`, first
-obtain a thread-safe host object outside the parallel script block.  Then pass
-the thread-safe host object inside the parallel script block using the
-`-CustomHost` parameter and the `$using:` syntax.
+Which command invocation produced which line of output?  It is impossible to
+know.  PSPrefix removes the ambiguity:
 
 ```pwsh
 Show-Elapsed {
-    $h = Get-SynchronizedHost
+    $MyHost = Get-SynchronizedHost
     1..4 | ForEach-Object -Parallel {
-        Show-Prefixed "Task $_" -CustomHost $using:h {
+        Show-Prefixed "Task $_" -CustomHost $using:MyHost {
             Write-Host "example command output"
         }
     }
 }
 ```
 
-![Output of the combined parallel usage example above](https://raw.githubusercontent.com/sharpjs/PSPrefix/main/img/output-parallel.png) 
+![Output of the parallel example above: each line is prefixed by a task name.](https://raw.githubusercontent.com/sharpjs/PSPrefix/main/img/output-parallel.png) 
+
+A trick is required when using the `Show-Elapsed` and `Show-Prefixed` cmdlets
+in parallel multithreaded scenarios.  The cmdlets work by routing output
+through custom `PSHost` objects, but that technique does not work within
+`ForEach-Object -Parallel` script blocks.  PSPrefix provides a pair of features
+to work around this limitation,
+
+First, PSPrefix provides a `Get-SynchronizedHost` cmdlet that returns a wrapper
+over the current `$Host` object.  The wrapper makes the host object safe to
+share across threads.
+
+Second, the `Show-Elapsed` and `Show-Prefixed` cmdlets have a `-CustomHost`
+parameter that accepts a host object to use instead of the current `$Host`
+object.
+
+To use a PSPrefix cmdlet within a `ForEach-Object -Parallel` scripb block, use
+`Get-SynchronizedHost` to obtain a thread-safe host object outside the parallel
+script block.  Then pass the thread-safe host object inside the parallel script
+block using the `-CustomHost` parameter and the `$using:` syntax, as shown in
+the example above.
 
 <!--
   Copyright Subatomix Research Inc.
