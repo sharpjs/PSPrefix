@@ -7,11 +7,7 @@
 
   <PropertyGroup>
     <Description>Prefixes output with the elapsed time or a custom header. Good for long-running, potentially parallel tasks.</Description>
-    <PackageOutputPath>$(PackageOutputRoot)modules</PackageOutputPath>
-    <PackageTags>
-      PSHost Host Task Output Color Colour
-      PSEdition_Core Windows Linux MacOS
-    </PackageTags>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 
   <ItemGroup>
