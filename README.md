@@ -124,7 +124,7 @@ one or more variables via the `-Variable` parameter.
 $x = 1337
 $y =   42
 
-Show-Prefixed Foo -Module x, y {
+Show-Prefixed Foo -Variable x, y {
     # $x and $y are visible here
 }
 ```
@@ -182,7 +182,7 @@ Second, the `Show-Elapsed` and `Show-Prefixed` cmdlets have a `-CustomHost`
 parameter that accepts a host object to use instead of the current `$Host`
 object.
 
-To use a PSPrefix cmdlet within a `ForEach-Object -Parallel` scripb block, use
+To use a PSPrefix cmdlet within a `ForEach-Object -Parallel` script block, use
 `Get-SynchronizedHost` to obtain a thread-safe host object outside the parallel
 script block.  Then pass the thread-safe host object inside the parallel script
 block using the `-CustomHost` parameter and the `$using:` syntax, as shown in
