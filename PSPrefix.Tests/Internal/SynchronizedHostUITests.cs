@@ -12,6 +12,12 @@ public class SynchronizedHostUITests : PSHostUITests
     private new SynchronizedHostUI UI => (SynchronizedHostUI) base.UI;
 
     [Test]
+    public void Lock_Get()
+    {
+        UI.Lock.ShouldNotBeNull();
+    }
+
+    [Test]
     public void RawUI_Get()
     {
         UI.RawUI.Should().BeOfType<SynchronizedHostRawUI>();

@@ -50,8 +50,9 @@ internal class PrefixedHostUI : PSHostUserInterface
     /// <inheritdoc/>
     public override void Write(string value)
     {
-        var start = 0;
+        using var _ = LockIfSynchronized();
 
+        var start = 0;
         do
         {
             Prepare();
@@ -66,8 +67,9 @@ internal class PrefixedHostUI : PSHostUserInterface
     /// <inheritdoc/>
     public override void Write(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
     {
-        var start = 0;
+        using var _ = LockIfSynchronized();
 
+        var start = 0;
         do
         {
             Prepare();
@@ -82,6 +84,8 @@ internal class PrefixedHostUI : PSHostUserInterface
     /// <inheritdoc/>
     public override void WriteLine()
     {
+        using var _ = LockIfSynchronized();
+
         Prepare();
         _ui.WriteLine();
         Update(eol: true);
@@ -90,9 +94,9 @@ internal class PrefixedHostUI : PSHostUserInterface
     /// <inheritdoc/>
     public override void WriteLine(string value)
     {
-        var start = 0;
+        using var _ = LockIfSynchronized();
 
-        for (;;)
+        for (var start = 0;;)
         {
             Prepare();
             var (more, limit, next) = FindEol(value, start);
@@ -106,6 +110,8 @@ internal class PrefixedHostUI : PSHostUserInterface
     /// <inheritdoc/>
     public override void WriteLine(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
     {
+        using var _ = LockIfSynchronized();
+
         for (var start = 0;;)
         {
             Prepare();
@@ -120,6 +126,8 @@ internal class PrefixedHostUI : PSHostUserInterface
     /// <inheritdoc/>
     public override void WriteDebugLine(string message)
     {
+        using var _ = LockIfSynchronized();
+
         for (var start = 0;;)
         {
             Prepare();
@@ -134,6 +142,8 @@ internal class PrefixedHostUI : PSHostUserInterface
     /// <inheritdoc/>
     public override void WriteVerboseLine(string message)
     {
+        using var _ = LockIfSynchronized();
+
         for (var start = 0;;)
         {
             Prepare();
@@ -148,6 +158,8 @@ internal class PrefixedHostUI : PSHostUserInterface
     /// <inheritdoc/>
     public override void WriteWarningLine(string message)
     {
+        using var _ = LockIfSynchronized();
+
         for (var start = 0;;)
         {
             Prepare();
@@ -166,6 +178,8 @@ internal class PrefixedHostUI : PSHostUserInterface
         if (string.IsNullOrEmpty(value))
             return;
 
+        using var _ = LockIfSynchronized();
+
         for (var start = 0;;)
         {
             Prepare();
@@ -179,6 +193,8 @@ internal class PrefixedHostUI : PSHostUserInterface
 
     private void WriteErrorLineCore(string message)
     {
+        using var _ = LockIfSynchronized();
+
         var previousColor = _rawUI.ForegroundColor;
         try
         {
@@ -250,6 +266,13 @@ internal class PrefixedHostUI : PSHostUserInterface
         return _ui.PromptForCredential(
             caption, message, userName, targetName, allowedCredentialTypes, options
         );
+    }
+
+    private LockScope LockIfSynchronized()
+    {
+        return _ui is SynchronizedHostUI sync
+            ? new LockScope(sync.Lock)
+            : default;
     }
 
     private void Prepare()

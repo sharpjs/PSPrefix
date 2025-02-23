@@ -35,6 +35,11 @@ public class SynchronizedHostUI : PSHostUserInterface
         _lock  = @lock;
     }
 
+    /// <summary>
+    ///   Gets the lock object.
+    /// </summary>
+    internal object Lock => _lock; // Used by PrefixedHostUI
+
     /// <inheritdoc/>
     public override PSHostRawUserInterface RawUI
     {
