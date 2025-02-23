@@ -6,12 +6,28 @@ using System.Security;
 
 namespace PSPrefix.Internal;
 
+/// <summary>
+///   A PowerShell host user interface wrapper that is safe to share across
+///   threads.
+/// </summary>
+/// <remarks>
+///   All members of this class are thread-safe.
+/// </remarks>
 public class SynchronizedHostUI : PSHostUserInterface
 {
     private readonly PSHostUserInterface   _ui;
     private readonly SynchronizedHostRawUI _rawUI;
     private readonly object                _lock;
 
+    /// <summary>
+    ///   Initializes a new <see cref="SynchronizedHostUI"/> instance.
+    /// </summary>
+    /// <param name="ui">
+    ///   The underlying host raw user interface.
+    /// </param>
+    /// <param name="lock">
+    ///   The lock object.
+    /// </param>
     internal SynchronizedHostUI(PSHostUserInterface ui, object @lock)
     {
         _ui    = ui;

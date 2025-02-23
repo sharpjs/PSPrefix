@@ -5,6 +5,12 @@ using System.Globalization;
 
 namespace PSPrefix.Internal;
 
+/// <summary>
+///   A PowerShell host wrapper that is safe to share across threads.
+/// </summary>
+/// <remarks>
+///   All members of this class are thread-safe.
+/// </remarks>
 public class SynchronizedHost : PSHost
 {
     private readonly PSHost              _host;

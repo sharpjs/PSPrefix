@@ -3,11 +3,27 @@
 
 namespace PSPrefix.Internal;
 
+/// <summary>
+///   A PowerShell host raw user interface wrapper that is safe to share across
+///   threads.
+/// </summary>
+/// <remarks>
+///   All members of this class are thread-safe.
+/// </remarks>
 public class SynchronizedHostRawUI : PSHostRawUserInterface
 {
     private readonly PSHostRawUserInterface _rawUI;
     private readonly object                 _lock;
 
+    /// <summary>
+    ///   Initializes a new <see cref="SynchronizedHostRawUI"/> instance.
+    /// </summary>
+    /// <param name="rawUI">
+    ///   The underlying host raw user interface.
+    /// </param>
+    /// <param name="lock">
+    ///   The lock object.
+    /// </param>
     internal SynchronizedHostRawUI(PSHostRawUserInterface rawUI, object @lock)
     {
         _rawUI = rawUI;
