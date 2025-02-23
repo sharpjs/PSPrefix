@@ -22,13 +22,13 @@ PSPrefix provides three cmdlets:
 To install in PowerShell 7.2 or later:
 
 ```pwsh
-Install-Module PSPrefix -AllowPrerelease
+Install-Module PSPrefix
 ```
 
 To update:
 
 ```pwsh
-Update-Module PSPrefix -AllowPrerelease
+Update-Module PSPrefix
 ```
 
 ## Usage
