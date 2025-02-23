@@ -6,6 +6,10 @@ using System.Security;
 
 namespace PSPrefix.Internal;
 
+/// <summary>
+///   A PowerShell host user interface wrapper that prepends a prefix to output
+///   lines.
+/// </summary>
 internal class PrefixedHostUI : PSHostUserInterface
 {
     const char
@@ -18,6 +22,15 @@ internal class PrefixedHostUI : PSHostUserInterface
 
     private bool _isAtBol;
 
+    /// <summary>
+    ///   Initializes a new <see cref="PrefixedHostUI"/> instance.
+    /// </summary>
+    /// <param name="ui">
+    ///   The underlying host user interface.
+    /// </param>
+    /// <param name="prefix">
+    ///   The prefix.
+    /// </param>
     internal PrefixedHostUI(PSHostUserInterface ui, IPrefix prefix)
     {
         _ui      = ui;

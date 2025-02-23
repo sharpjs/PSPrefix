@@ -4,7 +4,7 @@
 namespace PSPrefix.Commands;
 
 /// <summary>
-///   The New-SynchronizedHost command.
+///   The Get-SynchronizedHost command.
 /// </summary>
 [Cmdlet(VerbsCommon.Get, "SynchronizedHost", ConfirmImpact = ConfirmImpact.Low)]
 [OutputType(typeof(SynchronizedHost))]

@@ -48,7 +48,8 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
     ///   </para>
     ///   <para>
     ///     This command imports modules in a child runspace used to execute
-    ///     the <c>-ScriptBlock</c>.  This command does not import the modules into the containing runspace.
+    ///     the <c>-ScriptBlock</c>.  This command does not import the modules
+    ///     into the containing runspace.
     ///   </para>
     /// </remarks>
     [Parameter(ValueFromPipelineByPropertyName = true)]

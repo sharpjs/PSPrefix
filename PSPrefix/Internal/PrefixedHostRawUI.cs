@@ -3,11 +3,24 @@
 
 namespace PSPrefix.Internal;
 
+/// <summary>
+///   A PowerShell host raw user interface wrapper that prepends a prefix to
+///   output lines.
+/// </summary>
 internal class PrefixedHostRawUI : PSHostRawUserInterface
 {
     private readonly PSHostRawUserInterface _rawUI;
     private readonly IPrefix                _prefix;
 
+    /// <summary>
+    ///   Initializes a new <see cref="PrefixedHostRawUI"/> instance.
+    /// </summary>
+    /// <param name="rawUI">
+    ///   The underlying host raw user interface.
+    /// </param>
+    /// <param name="prefix">
+    ///   The prefix.
+    /// </param>
     public PrefixedHostRawUI(PSHostRawUserInterface rawUI, IPrefix prefix)
     {
         _rawUI  = rawUI;

@@ -5,6 +5,9 @@ using System.Diagnostics;
 
 namespace PSPrefix.Internal;
 
+/// <summary>
+///   An elapsed-time prefix for <see cref="PrefixedHost"/>.
+/// </summary>
 internal class ElapsedPrefix : SimplePrefix
 {
     // Format:
@@ -16,12 +19,17 @@ internal class ElapsedPrefix : SimplePrefix
     private TimeSpan _cachedElapsed;
     private string?  _cachedPrefix;
 
+    /// <summary>
+    ///   Initializes a new <see cref="ElapsedPrefix"/> instance that counts
+    ///   elapsed time from the current moment.
+    /// </summary>
     public ElapsedPrefix()
     {
         _stopwatch     = Stopwatch.StartNew();
         _cachedElapsed = TimeSpan.MinValue;
     }
 
+    /// <inheritdoc/>
     protected internal override string GetPrefix()
     {
         var elapsed = Floor(_stopwatch.Elapsed);

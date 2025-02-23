@@ -5,6 +5,9 @@ using System.Globalization;
 
 namespace PSPrefix.Internal;
 
+/// <summary>
+///   A PowerShell host wrapper that prepends a prefix to output lines.
+/// </summary>
 internal sealed class PrefixedHost : PSHost
 {
     private readonly PSHost          _host;
