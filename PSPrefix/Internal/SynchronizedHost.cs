@@ -103,4 +103,39 @@ public class SynchronizedHost : PSHost
     {
         lock (_lock) _host.SetShouldExit(exitCode);
     }
+
+    /// <summary>
+    ///   Acquires an exclusive lock on the host.
+    /// </summary>
+    /// <remarks>
+    ///   <para>
+    ///     This method blocks until the current thread acquires a lock.
+    ///   </para>
+    ///   <para>
+    ///     It is safe for a thread to invoke this method if the thread already
+    ///     holds a lock.  The thread continues to hold the lock until the
+    ///     thread invokes <see cref="Unlock"/> once for each corresponding
+    ///     invocation of <c>Lock</c>.
+    ///   </para>
+    /// </remarks>
+    public void Lock()
+    {
+        Monitor.Enter(_lock);
+    }
+
+    /// <summary>
+    ///   Releases an exclusive lock on the host.
+    /// </summary>
+    /// <remarks>
+    ///   A thread that holds a lock continues to hold it until the thread
+    ///   invokes <c>Unlock</c> once for each corresponding invocation of
+    ///   <see cref="Lock"/>.
+    /// </remarks>
+    /// <exception cref="SynchronizationLockException">
+    ///   The current thread does not hold an exclusive lock on the host.
+    /// </exception>
+    public void Unlock()
+    {
+        Monitor.Exit(_lock);
+    }
 }
