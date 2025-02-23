@@ -32,13 +32,15 @@ indent_size = 2
 insert_final_newline = false
 
 [*.cs]
-csharp_indent_case_contents_when_block = false                  # was true
-csharp_prefer_braces                   = when_multiline         # was true
-csharp_space_after_cast                = true                   # was false
-csharp_style_namespace_declarations    = file_scoped:suggestion # was block_scoped
-csharp_style_var_elsewhere             = true                   # was false
-csharp_style_var_for_built_in_types    = true                   # was false
-csharp_style_var_when_type_is_apparent = true                   # was false
+csharp_indent_case_contents_when_block   = false                  # was true
+csharp_prefer_braces                     = when_multiline         # was true
+csharp_space_after_cast                  = true                   # was false
+csharp_style_namespace_declarations      = file_scoped:suggestion # was block_scoped
+csharp_style_prefer_primary_constructors = false                  # was true
+csharp_style_prefer_top_level_statements = false                  # was true
+csharp_style_var_elsewhere               = true                   # was false
+csharp_style_var_for_built_in_types      = true                   # was false
+csharp_style_var_when_type_is_apparent   = true                   # was false
 
 [*.cs]
 dotnet_sort_system_directives_first                               = true          # was false
