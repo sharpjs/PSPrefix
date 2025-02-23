@@ -98,16 +98,19 @@
 
     <maml:description>
       <maml:para>
-        The Show-Elapsed cmdlet runs the commands of a script block and prefixes each line of output with a header showing the time that has elapsed since the cmdlet invocation began.  To add a custom prefix instead of the elapsed time, use the Show-Prefixed cmdlet.  Use the Show-Elapsed and Show-Prefixed cmdlets together to improve the output of long-running, multi-stage operations.
+        The Show-Elapsed cmdlet runs the commands of a script block and prefixes each line of output with a header showing the time that has elapsed since the cmdlet invocation began.  When less than one day has elapsed, the header has the format '[+hh:mm:ss] '.  After one day has elapsed, the header has the format '[+d.hh:mm:ss] '.  
       </maml:para>
       <maml:para>
-        When less than one day has elapsed, the header has the format '[+hh:mm:ss] '.  After one day has elapsed, the header has the format '[+d.hh:mm:ss] '.
+        To add a custom header instead of the elapsed time, use the Show-Prefixed cmdlet.  Use the Show-Elapsed and Show-Prefixed cmdlets together to improve the output of long-running, multi-stage operations.
       </maml:para>
       <maml:para>
-        The Show-Elapsed cmdlet works by invoking a script block in a new runspace on the current thread.  By default, the script block begins execution with no modules imported, regardless of any modules already imported in the invoking PowerShell session.  To pre-import modules into the script block's runspace, use the -Module parameter.  Alternatively, the script block can import import modules as needed using the Import-Module cmdlet.
+        The Show-Elapsed cmdlet works by invoking a script block in a new runspace on the current thread.  By default, the script block begins execution with no modules imported, regardless of any modules already imported in the invoking PowerShell session.  To pre-import modules into the script block's runspace, use the -Module parameter.  Alternatively, the script block can import modules as needed using the Import-Module cmdlet.  Module imports for the script block, regardless of method, do not affect the invoking session.
       </maml:para>
       <maml:para>
-        Likewise, by default, the script block begins execution with only the default PowerShell variables defined, with no access to any variables defined in the invoking PowerShell session.  To pass variables from the invoking session into the script block's runspace, use the -Variable parameter.
+        Likewise, by default, the script block begins execution with only the default PowerShell variables defined, with no access to any variables defined in the invoking PowerShell session.  To copy variables from the invoking session into the script block's runspace, use the -Variable parameter.  Alternatively, the script block can define variables as needed.  Variable definitions for the script block, regardless of method, do not affect the invoking session.
+      </maml:para>
+      <maml:para>
+        NOTE: The -Variable parameter performs a 'shallow' copy only.  Both the original variable in the invoking session and the copy in the script block contain the same value object.  If that value object is internally changeable and the script block changes it, the change is visible to the invoking session.
       </maml:para>
     </maml:description>
 
@@ -143,10 +146,10 @@
 
     <command:parameters>
 
-      <command:parameter required="true" position="0" pipelineInput="False" globbing="false" variableLength="false">
+      <command:parameter required="true" position="0" pipelineInput="True (ByPropertyName)" globbing="false" variableLength="false">
         <maml:name>ScriptBlock</maml:name>
         <maml:description>
-          <maml:para>Specifies the commands to run. Enclose the commands in braces { } to create a script block.</maml:para>
+          <maml:para>Specifies the commands to run.  Enclose the commands in braces { } to create a script block.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Management.Automation.ScriptBlock</command:parameterValue>
         <dev:type>
@@ -156,10 +159,16 @@
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
 
-      <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+      <command:parameter required="false" position="named" pipelineInput="True (ByPropertyName)" globbing="false" variableLength="false">
         <maml:name>Module</maml:name>
         <maml:description>
           <maml:para>Specifies modules to import before running the script block.</maml:para>
+          <maml:para>
+            Specify a module by its name or by a PSModuleInfo object, such as one returned by the Get-Module cmdlet.
+          </maml:para>
+          <maml:para>
+            Modules imported via this parameter are visible within the script block only and do not affect the invoking session.
+          </maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
         <dev:type>
@@ -169,10 +178,19 @@
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
 
-      <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
+      <command:parameter required="false" position="named" pipelineInput="True (ByPropertyName)" globbing="false" variableLength="false">
         <maml:name>Variable</maml:name>
         <maml:description>
           <maml:para>Specifies variables to define before running the script block.</maml:para>
+          <maml:para>
+            Specify a variable by its name or by a PSVariable object, such as one returned by the Get-Variable cmdlet.
+          </maml:para>
+          <maml:para>
+            Variables defined via this parameter are visible within the script block only and do not affect the invoking session.
+          </maml:para>
+          <maml:para>
+            NOTE: This parameter performs a 'shallow' copy only.  Both the original variable in the invoking session and the copy in the script block contain the same value object.  If that value object is internally changeable and the script block changes it, the change is visible to the invoking session.
+          </maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
         <dev:type>
@@ -185,7 +203,7 @@
       <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
         <maml:name>CustomHost</maml:name>
         <maml:description>
-          <maml:para>Specifies a custom host to which prefixed output should flow.</maml:para>
+          <maml:para>Specifies a custom host to which to send prefixed output lines.  If this parameter is not provided, the cmdlet uses the current $Host.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
         <dev:type>
@@ -198,7 +216,12 @@
       <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
         <maml:name>PassThru</maml:name>
         <maml:description>
-          <maml:para>Causes the output stream of the script block to flow to the output stream of the Show-Elapsed cmdlet.</maml:para>
+          <maml:para>
+            Forward the script block's Success stream output objects to the invoking pipeline.  If this switch is not present, the Show-Elapsed cmdlet sends the script block's Success stream to the Out-Default cmdlet, which formats and displays the objects on the host, with the elapsed-time header.
+          </maml:para>
+          <maml:para>
+            The Show-Elapsed cmdlet always displays the script block's Error, Warning, Information, Verbose, and Debug streams on the host, with the elapsed-time header, as specified by PowerShell's preference variables.
+          </maml:para>
         </maml:description>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
@@ -224,7 +247,9 @@
           <maml:uri></maml:uri>
         </dev:type>
         <maml:description>
-          <maml:para>This cmdlet returns the objects that are produced by the script block.</maml:para>
+          <maml:para>
+            If the -PassThru switch is present, this cmdlet returns the objects that are produced by the script block.  Otherwise, this cmdlet does not produce pipeline output.
+          </maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>
@@ -253,7 +278,7 @@
     <command:details>
       <command:name>Show-Prefixed</command:name>
       <maml:description>
-        <maml:para>Runs commands, prefixing each line of output with a custom header.</maml:para>
+        <maml:para>Runs commands, prefixing output lines with a custom header.</maml:para>
       </maml:description>
       <maml:copyright><maml:para/></maml:copyright>
       <command:verb>Show</command:verb>
@@ -263,13 +288,19 @@
 
     <maml:description>
       <maml:para>
-        The Show-Prefixed cmdlet runs the commands of a script block and prefixes each line of output with a custom header.  To add an elapsed-time prefix instead of a custom string, use the Show-Elapsed cmdlet.  Use the Show-Elapsed and Show-Prefixed cmdlets together to improve the output of long-running, multi-stage operations.
+        The Show-Prefixed cmdlet runs the commands of a script block and prefixes each line of output with a header.  The header has the format '[p] ', where 'p' is the string specified by the -Prefix parameter.
       </maml:para>
       <maml:para>
-        The Show-Prefixed cmdlet works by invoking a script block in a new runspace on the current thread.  By default, the script block begins execution with no modules imported, regardless of any modules already imported in the invoking PowerShell session.  To pre-import modules into the script block's runspace, use the -Module parameter.  Alternatively, the script block can import import modules as needed using the Import-Module cmdlet.
+        To add an elapsed-time header instead of a string, use the Show-Elapsed cmdlet.  Use the Show-Elapsed and Show-Prefixed cmdlets together to improve the output of long-running, multi-stage operations.
       </maml:para>
       <maml:para>
-        Likewise, by default, the script block begins execution with only the default PowerShell variables defined, with no access to any variables defined in the invoking PowerShell session.  To pass variables from the invoking session into the script block's runspace, use the -Variable parameter.
+        The Show-Prefixed cmdlet works by invoking a script block in a new runspace on the current thread.  By default, the script block begins execution with no modules imported, regardless of any modules already imported in the invoking PowerShell session.  To pre-import modules into the script block's runspace, use the -Module parameter.  Alternatively, the script block can import modules as needed using the Import-Module cmdlet.  Module imports for the script block, regardless of method, do not affect the invoking session.
+      </maml:para>
+      <maml:para>
+        Likewise, by default, the script block begins execution with only the default PowerShell variables defined, with no access to any variables defined in the invoking PowerShell session.  To copy variables from the invoking session into the script block's runspace, use the -Variable parameter.  Alternatively, the script block can define variables as needed.  Variable definitions for the script block, regardless of method, do not affect the invoking session.
+      </maml:para>
+      <maml:para>
+        NOTE: The -Variable parameter performs a 'shallow' copy only.  Both the original variable in the invoking session and the copy in the script block contain the same value object.  If that value object is internally changeable and the script block changes it, the change is visible to the invoking session.
       </maml:para>
     </maml:description>
 
@@ -277,7 +308,7 @@
       <command:syntaxItem>
         <maml:name>Show-Prefixed</maml:name>
         <command:parameter required="true" position="0" pipelineInput="False" globbing="false" variableLength="false">
-          <maml:name>Name</maml:name>
+          <maml:name>Prefix</maml:name>
           <maml:description/>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         </command:parameter>
@@ -311,9 +342,9 @@
     <command:parameters>
 
       <command:parameter required="true" position="0" pipelineInput="True (ByPropertyName)" globbing="false" variableLength="false">
-        <maml:name>Name</maml:name>
+        <maml:name>Prefix</maml:name>
         <maml:description>
-          <maml:para>Sets prefix.</maml:para>
+          <maml:para>Specifies the prefix that should appear in a header before each line of output.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
@@ -326,7 +357,7 @@
       <command:parameter required="true" position="1" pipelineInput="True (ByPropertyName)" globbing="false" variableLength="false">
         <maml:name>ScriptBlock</maml:name>
         <maml:description>
-          <maml:para>Specifies the commands to run. Enclose the commands in braces { } to create a script block.</maml:para>
+          <maml:para>Specifies the commands to run.  Enclose the commands in braces { } to create a script block.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Management.Automation.ScriptBlock</command:parameterValue>
         <dev:type>
@@ -340,6 +371,12 @@
         <maml:name>Module</maml:name>
         <maml:description>
           <maml:para>Specifies modules to import before running the script block.</maml:para>
+          <maml:para>
+            Specify a module by its name or by a PSModuleInfo object, such as one returned by the Get-Module cmdlet.
+          </maml:para>
+          <maml:para>
+            Modules imported via this parameter are visible within the script block only and do not affect the invoking session.
+          </maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
         <dev:type>
@@ -353,6 +390,15 @@
         <maml:name>Variable</maml:name>
         <maml:description>
           <maml:para>Specifies variables to define before running the script block.</maml:para>
+          <maml:para>
+            Specify a variable by its name or by a PSVariable object, such as one returned by the Get-Variable cmdlet.
+          </maml:para>
+          <maml:para>
+            Variables defined via this parameter are visible within the script block only and do not affect the invoking session.
+          </maml:para>
+          <maml:para>
+            NOTE: This parameter performs a 'shallow' copy only.  Both the original variable in the invoking session and the copy in the script block contain the same value object.  If that value object is internally changeable and the script block changes it, the change is visible to the invoking session.
+          </maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
         <dev:type>
@@ -365,7 +411,7 @@
       <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
         <maml:name>CustomHost</maml:name>
         <maml:description>
-          <maml:para>Specifies a custom host to which prefixed output should flow.</maml:para>
+          <maml:para>Specifies a custom host to which to send prefixed output lines.  If this parameter is not provided, the cmdlet uses the current $Host.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="true">object[]</command:parameterValue>
         <dev:type>
@@ -378,7 +424,12 @@
       <command:parameter required="false" position="named" pipelineInput="False" globbing="false" variableLength="false">
         <maml:name>PassThru</maml:name>
         <maml:description>
-          <maml:para>Causes the output stream of the script block to flow to the output stream of the Show-Elapsed cmdlet.</maml:para>
+          <maml:para>
+            Forward the script block's Success stream output objects to the invoking pipeline.  If this switch is not present, the Show-Prefixed cmdlet sends the script block's Success stream to the Out-Default cmdlet, which formats and displays the objects on the host, with the custom header.
+          </maml:para>
+          <maml:para>
+            The Show-Prefixed cmdlet always displays the script block's Error, Warning, Information, Verbose, and Debug streams on the host, with the custom header, as specified by PowerShell's preference variables.
+          </maml:para>
         </maml:description>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
@@ -404,7 +455,9 @@
           <maml:uri></maml:uri>
         </dev:type>
         <maml:description>
-          <maml:para>This cmdlet returns the objects that are produced by the script block.</maml:para>
+          <maml:para>
+            If the -PassThru switch is present, this cmdlet returns the objects that are produced by the script block.  Otherwise, this cmdlet does not produce pipeline output.
+          </maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>

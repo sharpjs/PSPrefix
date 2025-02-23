@@ -4,7 +4,8 @@
 namespace PSPrefix.Commands;
 
 /// <summary>
-///   The Get-SynchronizedHost command.
+///   The <c>Get-SynchronizedHost</c> command.
+///   Gets a thread-safe object that represents the current host program.
 /// </summary>
 [Cmdlet(VerbsCommon.Get, "SynchronizedHost", ConfirmImpact = ConfirmImpact.Low)]
 [OutputType(typeof(SynchronizedHost))]

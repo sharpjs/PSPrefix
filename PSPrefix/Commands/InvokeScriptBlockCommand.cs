@@ -10,7 +10,7 @@ using OutputStream = PSDataCollection<PSObject?>;
 using ErrorStream  = PSDataCollection<ErrorRecord>;
 
 /// <summary>
-///   Base class for a command that invokes a script block in a new runspace.
+///   Base class for a cmdlet that invokes a script block in a new runspace.
 /// </summary>
 public abstract class InvokeScriptBlockCommand : PSCmdlet
 {
@@ -22,7 +22,7 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
 
     /// <summary>
     ///   <b>-ScriptBlock:</b>
-    ///   Script block to execute.
+    ///   The script block to invoke.
     /// </summary>
     [Parameter(
         Mandatory                       = true,
@@ -39,17 +39,16 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
 
     /// <summary>
     ///   <b>-Module:</b>
-    ///   Modules to import before invoking <see cref="ScriptBlock"/>.
+    ///   Modules to import before invoking the <see cref="ScriptBlock"/>.
     /// </summary>
     /// <remarks>
     ///   <para>
     ///     Specify a module by its name or by a <see cref="PSModuleInfo"/>
-    ///       object, such as one returned by the <c>Get-Module</c> command.
+    ///       object, such as one returned by the <c>Get-Module</c> cmdlet.
     ///   </para>
     ///   <para>
-    ///     This command imports modules in a child runspace used to execute
-    ///     the <c>-ScriptBlock</c>.  This command does not import the modules
-    ///     into the containing runspace.
+    ///     Modules imported via this parameter are visible within the
+    ///     <c>-ScriptBlock</c> only and do not affect the invoking runspace.
     ///   </para>
     /// </remarks>
     [Parameter(ValueFromPipelineByPropertyName = true)]
@@ -63,15 +62,22 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
 
     /// <summary>
     ///   <b>-Variable:</b>
-    ///   Variables to predefine before invoking <see cref="ScriptBlock"/>.
+    ///   Variables to define before invoking the <see cref="ScriptBlock"/>.
     /// </summary>
     /// <remarks>
     ///   <para>
     ///     Specify a variable by its name or by a <see cref="PSVariable"/>
-    ///       object, such as one returned by the <c>Get-Variable</c> command.
+    ///       object, such as one returned by the <c>Get-Variable</c> cmdlet.
     ///   </para>
     ///   <para>
-    ///     TODO: Child runspace.
+    ///     Variables defined via this parameter are visible within the
+    ///     <c>-ScriptBlock</c> only and do not affect the invoking runspace.
+    ///   </para>
+    ///   <para>
+    ///     ⚠ <b>NOTE:</b> Variables defined via this parameter are shallow
+    ///     copies that contain the same value object.  If that value object is
+    ///     internally mutable and the <see cref="ScriptBlock"/> mutates it,
+    ///     the change is visible to the invoking runspace.
     ///   </para>
     /// </remarks>
     [Parameter(ValueFromPipelineByPropertyName = true)]
@@ -85,7 +91,7 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
 
     /// <summary>
     ///   <b>-CustomHost:</b>
-    ///   Use a custom PSHost.
+    ///   A custom <c>PSHost</c> to which to send prefixed output lines.
     /// </summary>
     [Parameter(ValueFromPipelineByPropertyName = true)]
     [ValidateNotNull]
@@ -93,33 +99,19 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
 
     /// <summary>
     ///   <b>-PassThru:</b>
-    ///   Write script block output objects to the pipeline.  If this switch is
-    ///   not present, the command sends script block output objects to the
-    ///   <c>Out-Default</c> command, which formats objects and displays them
-    ///   on the current host.
+    ///   Forward the <see cref="ScriptBlock"/> Success stream output objects
+    ///   to the invoking pipeline.  If this switch is not present, the cmdlet
+    ///   sends the script block's Success stream to the <c>Out-Default</c>
+    ///   cmdlet, which formats and displays the objects on the host.
     /// </summary>
     [Parameter]
     public SwitchParameter PassThru { get; set; }
 
     /// <summary>
-    ///   Gets the PowerShell host to use when invoking the script block, or
-    ///   <see langword="null"/> to use PowerShell's default host.
+    ///   Gets the PowerShell host to use when invoking the
+    ///   <see cref="ScriptBlock"/>.
     /// </summary>
     protected internal virtual PSHost EffectiveHost => CustomHost ?? Host;
-
-#if PRESERVE_PREFERENCE_VARIABLES_MAYBE
-    protected virtual IEnumerable<object> AutoVariables => [
-        "ConfirmPreference",
-        "DebugPreference",
-        "ErrorActionPreference",
-        "InformationPreference",
-        "ProgressPreference",
-        "PSNativeCommandUseErrorActionPreference",
-        "VerbosePreference",
-        "WarningPreference",
-        "WhatIfPreference",
-    ];
-#endif
 
     /// <inheritdoc/>
     protected override void ProcessRecord()
