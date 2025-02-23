@@ -26,7 +26,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
     {
         Expect(u => u.ForegroundColor, result: Green);
 
-        RawUI.ForegroundColor.Should().Be(Green);
+        RawUI.ForegroundColor.ShouldBe(Green);
     }
 
     [Test]
@@ -42,7 +42,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
     {
         Expect(u => u.BackgroundColor, result: DarkBlue);
 
-        RawUI.BackgroundColor.Should().Be(DarkBlue);
+        RawUI.BackgroundColor.ShouldBe(DarkBlue);
     }
 
     [Test]
@@ -60,7 +60,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
 
         Expect(u => u.WindowPosition, result: value);
 
-        RawUI.WindowPosition.Should().Be(value);
+        RawUI.WindowPosition.ShouldBe(value);
     }
 
     [Test]
@@ -81,7 +81,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
 
         Expect(u => u.WindowSize, result: innerValue);
 
-        RawUI.WindowSize.Should().Be(outerValue);
+        RawUI.WindowSize.ShouldBe(outerValue);
     }
 
     [Test]
@@ -103,7 +103,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
 
         Expect(u => u.MaxWindowSize, result: innerValue);
 
-        RawUI.MaxWindowSize.Should().Be(outerValue);
+        RawUI.MaxWindowSize.ShouldBe(outerValue);
     }
 
     [Test]
@@ -114,7 +114,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
 
         Expect(u => u.MaxPhysicalWindowSize, result: innerValue);
 
-        RawUI.MaxPhysicalWindowSize.Should().Be(outerValue);
+        RawUI.MaxPhysicalWindowSize.ShouldBe(outerValue);
     }
 
     [Test]
@@ -122,7 +122,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
     {
         Expect(u => u.WindowTitle, result: "a");
 
-        RawUI.WindowTitle.Should().Be("a");
+        RawUI.WindowTitle.ShouldBe("a");
     }
 
     [Test]
@@ -141,7 +141,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
 
         Expect(u => u.BufferSize, result: innerValue);
 
-        RawUI.BufferSize.Should().Be(outerValue);
+        RawUI.BufferSize.ShouldBe(outerValue);
     }
 
     [Test]
@@ -163,7 +163,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
 
         Expect(u => u.CursorPosition, result: innerValue);
 
-        RawUI.CursorPosition.Should().Be(outerValue);
+        RawUI.CursorPosition.ShouldBe(outerValue);
     }
 
     [Test]
@@ -182,7 +182,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
     {
         Expect(u => u.CursorSize, result: 3);
 
-        RawUI.CursorSize.Should().Be(3);
+        RawUI.CursorSize.ShouldBe(3);
     }
 
     [Test]
@@ -198,7 +198,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
     {
         Expect(u => u.KeyAvailable, result: true);
 
-        RawUI.KeyAvailable.Should().BeTrue();
+        RawUI.KeyAvailable.ShouldBeTrue();
     }
 
     [Test]
@@ -210,7 +210,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
 
         Expect(u => u.GetBufferContents(innerRectangle), result);
 
-        RawUI.GetBufferContents(outerRectangle).Should().Be(result);
+        RawUI.GetBufferContents(outerRectangle).ShouldBe(result);
     }
 
     [Test]
@@ -261,7 +261,7 @@ public class PrefixedHostRawUITests : PSHostRawUITests
 
         Expect(u => u.ReadKey(options), result: value);
 
-        RawUI.ReadKey(options).Should().Be(value);
+        RawUI.ReadKey(options).ShouldBe(value);
     }
 
     [Test]

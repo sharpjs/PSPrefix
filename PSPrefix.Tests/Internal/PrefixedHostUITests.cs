@@ -24,7 +24,7 @@ public class PrefixedHostUITests : PSHostUITests
     [Test]
     public void RawUI_Get()
     {
-        UI.RawUI.Should().BeOfType<PrefixedHostRawUI>();
+        UI.RawUI.ShouldBeOfType<PrefixedHostRawUI>();
     }
 
     [Test]
@@ -32,7 +32,7 @@ public class PrefixedHostUITests : PSHostUITests
     {
         Expect(u => u.SupportsVirtualTerminal, result: value);
 
-        UI.SupportsVirtualTerminal.Should().Be(value);
+        UI.SupportsVirtualTerminal.ShouldBe(value);
     }
 
     [Test]
@@ -166,7 +166,7 @@ public class PrefixedHostUITests : PSHostUITests
     {
         Expect(u => u.ReadLine(), result: "a");
 
-        UI.ReadLine().Should().Be("a");
+        UI.ReadLine().ShouldBe("a");
     }
 
     [Test]
@@ -179,7 +179,7 @@ public class PrefixedHostUITests : PSHostUITests
 
         Expect(u => u.ReadLineAsSecureString(), result: s);
 
-        UI.ReadLineAsSecureString().Should().BeSameAs(s);
+        UI.ReadLineAsSecureString().ShouldBeSameAs(s);
     }
 
     [Test]
@@ -190,7 +190,7 @@ public class PrefixedHostUITests : PSHostUITests
 
         Expect(u => u.Prompt("a", "b", descriptions), result);
 
-        UI.Prompt("a", "b", descriptions).Should().BeSameAs(result);
+        UI.Prompt("a", "b", descriptions).ShouldBeSameAs(result);
     }
 
     [Test]
@@ -200,7 +200,7 @@ public class PrefixedHostUITests : PSHostUITests
 
         Expect(u => u.PromptForChoice("a", "b", descriptions, 3), result: 2);
 
-        UI.PromptForChoice("a", "b", descriptions, 3).Should().Be(2);
+        UI.PromptForChoice("a", "b", descriptions, 3).ShouldBe(2);
     }
 
     [Test]
@@ -212,7 +212,7 @@ public class PrefixedHostUITests : PSHostUITests
 
         Expect(u => u.PromptForCredential("a", "b", "c", "d"), result: credential);
 
-        UI.PromptForCredential("a", "b", "c", "d").Should().BeSameAs(credential);
+        UI.PromptForCredential("a", "b", "c", "d").ShouldBeSameAs(credential);
     }
 
     [Test]
@@ -226,7 +226,7 @@ public class PrefixedHostUITests : PSHostUITests
 
         Expect(u => u.PromptForCredential("a", "b", "c", "d", types, options), result: credential);
 
-        UI.PromptForCredential("a", "b", "c", "d", types, options).Should().BeSameAs(credential);
+        UI.PromptForCredential("a", "b", "c", "d", types, options).ShouldBeSameAs(credential);
     }
 
     protected override PSHostUserInterface CreateHostUI(PSHostUserInterface ui)

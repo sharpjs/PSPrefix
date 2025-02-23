@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Using Include="Shouldly" />
+    <Using Remove="FluentAssertions" />
   </ItemGroup>
 
 </Project>

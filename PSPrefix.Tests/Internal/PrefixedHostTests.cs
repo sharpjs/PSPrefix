@@ -16,20 +16,21 @@ public class PrefixedHostTests : PSHostTests
     [Test]
     public void Construct_NullPrefix()
     {
-        Invoking(() => CreatePrefixedHost(InnerHost.Object, null!))
-            .Should().Throw<ArgumentNullException>();
+        Should.Throw<ArgumentNullException>(
+            () => CreatePrefixedHost(InnerHost.Object, null!)
+        );
     }
 
     [Test]
     public void Name_Get()
     {
-        Host.Name.Should().Be("PrefixedHost(MockHost)");
+        Host.Name.ShouldBe("PrefixedHost(MockHost)");
     }
 
     [Test]
     public void UI_Get_NotNull()
     {
-        Host.UI.Should().BeOfType<PrefixedHostUI>();
+        Host.UI.ShouldBeOfType<PrefixedHostUI>();
     }
 
     private static PrefixedHost CreatePrefixedHost(PSHost host, IPrefix prefix)

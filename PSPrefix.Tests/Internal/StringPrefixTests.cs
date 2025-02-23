@@ -9,8 +9,9 @@ public class StringPrefixTests
     [Test]
     public void Construct_NullPrefix()
     {
-        Invoking(() => new StringPrefix(null!))
-            .Should().Throw<ArgumentNullException>();
+        Should.Throw<ArgumentNullException>(
+            () => new StringPrefix(null!)
+        );
     }
 
     [Test]
@@ -18,13 +19,13 @@ public class StringPrefixTests
     {
         var prefix = new StringPrefix("a");
 
-        prefix.ForegroundColor.Should().Be(ConsoleColor.DarkBlue);
-        prefix.BackgroundColor.Should().Be(ConsoleColor.Black);
+        prefix.ForegroundColor.ShouldBe(ConsoleColor.DarkBlue);
+        prefix.BackgroundColor.ShouldBe(ConsoleColor.Black);
     }
 
     [Test]
     public void GetPrefix()
     {
-        new StringPrefix("a").GetPrefix().Should().Be("[a] ");
+        new StringPrefix("a").GetPrefix().ShouldBe("[a] ");
     }
 }

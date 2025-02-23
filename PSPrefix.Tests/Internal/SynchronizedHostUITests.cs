@@ -20,7 +20,7 @@ public class SynchronizedHostUITests : PSHostUITests
     [Test]
     public void RawUI_Get()
     {
-        UI.RawUI.Should().BeOfType<SynchronizedHostRawUI>();
+        UI.RawUI.ShouldBeOfType<SynchronizedHostRawUI>();
     }
 
     [Test]
@@ -28,7 +28,7 @@ public class SynchronizedHostUITests : PSHostUITests
     {
         Expect(u => u.SupportsVirtualTerminal, result: value);
 
-        UI.SupportsVirtualTerminal.Should().Be(value);
+        UI.SupportsVirtualTerminal.ShouldBe(value);
     }
 
     [Test]
@@ -153,7 +153,7 @@ public class SynchronizedHostUITests : PSHostUITests
             .Returns("a")
             .Verifiable();
 
-        UI.ReadLine().Should().Be("a");
+        UI.ReadLine().ShouldBe("a");
     }
 
     [Test]
@@ -169,7 +169,7 @@ public class SynchronizedHostUITests : PSHostUITests
             .Returns(s)
             .Verifiable();
 
-        UI.ReadLineAsSecureString().Should().BeSameAs(s);
+        UI.ReadLineAsSecureString().ShouldBeSameAs(s);
     }
 
     [Test]
@@ -183,7 +183,7 @@ public class SynchronizedHostUITests : PSHostUITests
             .Returns(result)
             .Verifiable();
 
-        UI.Prompt("a", "b", descriptions).Should().BeSameAs(result);
+        UI.Prompt("a", "b", descriptions).ShouldBeSameAs(result);
     }
 
     [Test]
@@ -197,7 +197,7 @@ public class SynchronizedHostUITests : PSHostUITests
             .Returns(2)
             .Verifiable();
 
-        UI.PromptForChoice("a", "b", descriptions, 3).Should().Be(2);
+        UI.PromptForChoice("a", "b", descriptions, 3).ShouldBe(2);
     }
 
     [Test]
@@ -215,7 +215,7 @@ public class SynchronizedHostUITests : PSHostUITests
             .Returns(credential)
             .Verifiable();
 
-        UI.PromptForCredential("a", "b", "c", "d").Should().BeSameAs(credential);
+        UI.PromptForCredential("a", "b", "c", "d").ShouldBeSameAs(credential);
     }
 
     [Test]
@@ -235,7 +235,7 @@ public class SynchronizedHostUITests : PSHostUITests
             .Returns(credential)
             .Verifiable();
 
-        UI.PromptForCredential("a", "b", "c", "d", types, options).Should().BeSameAs(credential);
+        UI.PromptForCredential("a", "b", "c", "d", types, options).ShouldBeSameAs(credential);
     }
 
     protected override PSHostUserInterface CreateHostUI(PSHostUserInterface ui)

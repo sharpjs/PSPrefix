@@ -15,13 +15,11 @@ public class GetSynchronizedHostCommandTests : CommandTests
 
         var (output, exception) = Execute(Host.Object, "Get-SynchronizedHost");
 
-        exception      .Should().BeNull();
-        output         .Should().ContainSingle().Which.AssignTo(out var obj);
-        obj            .Should().NotBeNull();
-        obj!.BaseObject.Should().BeOfType<SynchronizedHost>().Which.AssignTo(out var host);
-        host.UI        .Should().NotBeNull();
-
-        host.UI!.WriteLine();
-
+        exception   .ShouldBeNull();
+        output.Count.ShouldBe(1);
+        output[0]   .ShouldNotBeNull()
+            .BaseObject.ShouldBeOfType<SynchronizedHost>()
+            .UI        .ShouldNotBeNull()
+            .WriteLine();
     }
 }

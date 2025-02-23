@@ -11,13 +11,13 @@ public class SynchronizedHostTests : PSHostTests
     [Test]
     public void Name_Get()
     {
-        Host.Name.Should().Be("SynchronizedHost(MockHost)");
+        Host.Name.ShouldBe("SynchronizedHost(MockHost)");
     }
 
     [Test]
     public void UI_Get_NotNull()
     {
-        Host.UI.Should().BeOfType<SynchronizedHostUI>();
+        Host.UI.ShouldBeOfType<SynchronizedHostUI>();
     }
 
     [Test]

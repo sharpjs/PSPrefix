@@ -199,7 +199,7 @@ public class InvokeScriptBlockCommandTests
     public void GetVariables_String_NotFound()
     {
         new TestCommand { Variable = ["A"] }
-            .GetVariables().Should().BeEmpty();
+            .GetVariables().ShouldBeEmpty();
     }
 
     [Test]
@@ -239,7 +239,7 @@ public class InvokeScriptBlockCommandTests
 
         new TestCommand().FlowErrorStream(shell);
 
-        GetDataAddedEventHandler(shell.Streams.Error).Should().BeNull();
+        GetDataAddedEventHandler(shell.Streams.Error).ShouldBeNull();
     }
 
     private static string MakePath(string name)

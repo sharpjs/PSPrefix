@@ -11,7 +11,7 @@ public class SimplePrefixTests
     {
         var prefix = new TestPrefix();
 
-        prefix.Length.Should().Be(4); // "test".Length
+        prefix.Length.ShouldBe(4); // "test".Length
     }
 
     [Test]
@@ -19,7 +19,7 @@ public class SimplePrefixTests
     {
         var prefix = new TestPrefix();
 
-        prefix.ForegroundColor.Should().Be(ConsoleColor.DarkGray);
+        prefix.ForegroundColor.ShouldBe(ConsoleColor.DarkGray);
     }
 
     [Test]
@@ -27,7 +27,7 @@ public class SimplePrefixTests
     {
         var prefix = new TestPrefix() { ForegroundColor = ConsoleColor.Green };
 
-        prefix.ForegroundColor.Should().Be(ConsoleColor.Green);
+        prefix.ForegroundColor.ShouldBe(ConsoleColor.Green);
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class SimplePrefixTests
     {
         var prefix = new TestPrefix();
 
-        prefix.BackgroundColor.Should().Be(ConsoleColor.Black);
+        prefix.BackgroundColor.ShouldBe(ConsoleColor.Black);
     }
 
     [Test]
@@ -43,7 +43,7 @@ public class SimplePrefixTests
     {
         var prefix = new TestPrefix() { BackgroundColor = ConsoleColor.DarkGray };
 
-        prefix.BackgroundColor.Should().Be(ConsoleColor.DarkGray);
+        prefix.BackgroundColor.ShouldBe(ConsoleColor.DarkGray);
     }
 
     [Test]
@@ -57,9 +57,9 @@ public class SimplePrefixTests
 
         static void AssertArgs(ConsoleColor fg, ConsoleColor bg, string s)
         {
-            fg.Should().Be(ConsoleColor.Green);
-            bg.Should().Be(ConsoleColor.DarkGray);
-            s .Should().Be("test");
+            fg.ShouldBe(ConsoleColor.Green);
+            bg.ShouldBe(ConsoleColor.DarkGray);
+            s .ShouldBe("test");
         }
 
         var ui = Mock.Of<PSHostUserInterface>(MockBehavior.Strict);

@@ -9,6 +9,6 @@ public class ThisModuleTests
     [Test]
     public void Version()
     {
-        ThisModule.Version.Should().NotBeNull();
+        ThisModule.Version.ShouldNotBeNull();
     }
 }

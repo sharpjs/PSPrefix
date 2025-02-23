@@ -11,7 +11,7 @@ public class ElapsedPrefixTests
     {
         var prefix = new ElapsedPrefix();
 
-        prefix.GetPrefix().Should().MatchRegex(@"^\[\+[0-9]{2}:[0-9]{2}:[0-9]{2}\] $");
+        prefix.GetPrefix().ShouldMatch(@"^\[\+[0-9]{2}:[0-9]{2}:[0-9]{2}\] $");
     }
 
     [Test]
@@ -23,7 +23,7 @@ public class ElapsedPrefixTests
         var a = prefix.GetPrefix();
         var b = prefix.GetPrefix(); // slight race condition here
 
-        a.Should().BeSameAs(b);
+        a.ShouldBeSameAs(b);
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class ElapsedPrefixTests
         await Task.Delay(millisecondsDelay: 1100);
         var b = prefix.GetPrefix();
 
-        a.Should().NotBeSameAs(b);
+        a.ShouldNotBeSameAs(b);
     }
 
     [Test]
@@ -43,6 +43,6 @@ public class ElapsedPrefixTests
     [TestCase("01:23:45.999", "01:23:45")]
     public void Floor(TimeSpan input, TimeSpan output)
     {
-        ElapsedPrefix.Floor(input).Should().Be(output);
+        ElapsedPrefix.Floor(input).ShouldBe(output);
     }
 }

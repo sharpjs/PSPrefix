@@ -30,20 +30,21 @@ public abstract class PSHostTests : TestHarnessBase
     [Test]
     public void Construct_NullHost()
     {
-        Invoking(() => CreateHost(null!))
-            .Should().Throw<ArgumentNullException>();
+        Should.Throw<ArgumentNullException>(
+            () => CreateHost(null!)
+        );
     }
 
     [Test]
     public void InstanceId_Get()
     {
-        Host.InstanceId.Should().NotBeEmpty();
+        Host.InstanceId.ShouldNotBe(Guid.Empty);
     }
 
     [Test]
     public void Version_Get()
     {
-        Host.Version.Should().Be(ThisModule.Version);
+        Host.Version.ShouldBe(ThisModule.Version);
     }
 
     [Test]
@@ -51,7 +52,7 @@ public abstract class PSHostTests : TestHarnessBase
     {
         InnerHost.Setup(h => h.UI).Returns(default(PSHostUserInterface)!);
 
-        Host.UI.Should().BeNull();
+        Host.UI.ShouldBeNull();
     }
 
     [Test]
@@ -62,7 +63,7 @@ public abstract class PSHostTests : TestHarnessBase
             .Returns(value)
             .Verifiable();
 
-        Host.DebuggerEnabled.Should().Be(value);
+        Host.DebuggerEnabled.ShouldBe(value);
     }
 
     [Test]
@@ -85,7 +86,7 @@ public abstract class PSHostTests : TestHarnessBase
             .Returns(expected)
             .Verifiable();
 
-        Host.CurrentCulture.Should().BeSameAs(expected);
+        Host.CurrentCulture.ShouldBeSameAs(expected);
     }
 
     [Test]
@@ -98,7 +99,7 @@ public abstract class PSHostTests : TestHarnessBase
             .Returns(expected)
             .Verifiable();
 
-        Host.CurrentUICulture.Should().BeSameAs(expected);
+        Host.CurrentUICulture.ShouldBeSameAs(expected);
     }
 
     [Test]
@@ -111,7 +112,7 @@ public abstract class PSHostTests : TestHarnessBase
             .Returns(expected)
             .Verifiable();
 
-        Host.PrivateData.Should().BeSameAs(expected);
+        Host.PrivateData.ShouldBeSameAs(expected);
     }
 
     [Test]

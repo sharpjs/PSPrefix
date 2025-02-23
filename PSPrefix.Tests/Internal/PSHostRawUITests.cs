@@ -23,7 +23,7 @@ public abstract class PSHostRawUITests : TestHarnessBase
     {
         Expect(u => u.LengthInBufferCells('a'), result: 1);
 
-        RawUI.LengthInBufferCells('a').Should().Be(1);
+        RawUI.LengthInBufferCells('a').ShouldBe(1);
     }
 
     [Test]
@@ -31,7 +31,7 @@ public abstract class PSHostRawUITests : TestHarnessBase
     {
         Expect(u => u.LengthInBufferCells("abc"), result: 3);
 
-        RawUI.LengthInBufferCells("abc").Should().Be(3);
+        RawUI.LengthInBufferCells("abc").ShouldBe(3);
     }
 
     [Test]
@@ -39,7 +39,7 @@ public abstract class PSHostRawUITests : TestHarnessBase
     {
         Expect(u => u.LengthInBufferCells("abc", 1), result: 2);
 
-        RawUI.LengthInBufferCells("abc", 1).Should().Be(2);
+        RawUI.LengthInBufferCells("abc", 1).ShouldBe(2);
     }
 
     protected abstract PSHostRawUserInterface CreateHostUI(PSHostRawUserInterface rawUI);
