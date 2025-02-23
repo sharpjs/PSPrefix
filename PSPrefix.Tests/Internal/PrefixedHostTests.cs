@@ -32,8 +32,8 @@ public class PrefixedHostTests : PSHostTests
         Host.UI.Should().BeOfType<PrefixedHostUI>();
     }
 
-    private PrefixedHost CreatePrefixedHost(PSHost host, IPrefix prefix)
-        => new PrefixedHost(host, prefix);
+    private static PrefixedHost CreatePrefixedHost(PSHost host, IPrefix prefix)
+        => new(host, prefix);
 
     protected override PSHost CreateHost(PSHost host)
         => CreatePrefixedHost(host, Prefix.Object);
