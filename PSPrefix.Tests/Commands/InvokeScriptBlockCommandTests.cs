@@ -242,6 +242,12 @@ public class InvokeScriptBlockCommandTests
         GetDataAddedEventHandler(shell.Streams.Error).ShouldBeNull();
     }
 
+    [Test]
+    public void StopProcessing_NotProcessing()
+    {
+        new TestCommand().StopProcessing();
+    }
+
     private static string MakePath(string name)
     {
         return Path.GetFullPath(name + ".psd1");
@@ -288,6 +294,11 @@ public class InvokeScriptBlockCommandTests
         public TestCommand(params PSVariable[] predefinedVariables)
         {
             _variables = predefinedVariables.ToDictionary(v => v.Name, KeyComparer);
+        }
+
+        public new void StopProcessing()
+        {
+            base.StopProcessing();
         }
 
         internal override PSVariable? GetVariable(string name)

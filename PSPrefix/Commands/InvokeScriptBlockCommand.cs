@@ -113,6 +113,12 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
     /// </summary>
     protected internal virtual PSHost EffectiveHost => CustomHost ?? Host;
 
+    // Lock to prevent race condition between PowerShell disposal and stop
+    private readonly object _lock = new();
+
+    // Delegate that stops the current invocation; non-null when stoppable
+    private Action? _stopper;
+
     /// <inheritdoc/>
     protected override void ProcessRecord()
     {
@@ -132,7 +138,30 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
         if (!PassThru)
             powershell.AddCommand("Out-Default");
 
-        powershell.Invoke(NoInput, output, settings: new());
+        lock (_lock)
+            _stopper = powershell.Stop;
+
+        try
+        {
+            powershell.Invoke(NoInput, output, settings: new());
+        }
+        finally
+        {
+            lock (_lock)
+                _stopper = null;
+        }
+    }
+
+    /// <inheritdoc/>
+    [ExcludeFromCodeCoverage] // Do not know how to trigger this during invocation other than Ctrl+C
+    protected override void StopProcessing()
+    {
+        // This method runs on a different thread than that of ProcessRecord.
+        // The lock ensures that if _stopper has a value, the corresponding
+        // PowerShell instance has not been disposed yet.
+
+        lock (_lock)
+            _stopper?.Invoke();
     }
 
     private Runspace CreateRunspace()
