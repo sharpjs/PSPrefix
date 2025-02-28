@@ -153,7 +153,6 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
     }
 
     /// <inheritdoc/>
-    [ExcludeFromCodeCoverage] // Do not know how to trigger this during invocation other than Ctrl+C
     protected override void StopProcessing()
     {
         // This method runs on a different thread than that of ProcessRecord.
@@ -249,7 +248,8 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
     // Test extensibility point
     internal virtual PSVariable? GetVariable(string name)
     {
-        return SessionState.PSVariable.Get(name);
+        return SessionState.PSVariable.Get(name)
+            ?? ExposeTestSurfaceAsVariable(name);
     }
 
     private static SessionStateVariableEntry ToSessionStateVariableEntry(PSVariable variable)
@@ -306,5 +306,23 @@ public abstract class InvokeScriptBlockCommand : PSCmdlet
             foreach (var error in stream.ReadAll())
                 ui.WriteErrorLine(error.ToString());
         }
+    }
+
+    private PSVariable? ExposeTestSurfaceAsVariable(string name)
+    {
+        const string
+            TestPrefix             = "\0🚧TEST🚧 ",
+            TestStopProcessingName = TestPrefix + nameof(StopProcessing);
+
+        return name switch
+        {
+            TestStopProcessingName => new(nameof(StopProcessing), (Action) TestStopProcessing),
+            _                      => null,
+        };
+    }
+
+    private void TestStopProcessing()
+    {
+        Task.Run(StopProcessing);
     }
 }

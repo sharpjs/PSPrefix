@@ -150,6 +150,12 @@ public class ShowElapsedCommandTests : CommandTests
     }
 
     [Test]
+    public void Invoke_Module_NotFound()
+    {
+        Execute("Show-Elapsed { } -Module nonexistent");
+    }
+
+    [Test]
     public void Invoke_Variable()
     {
         var obj = ExecuteSingle(
@@ -157,6 +163,23 @@ public class ShowElapsedCommandTests : CommandTests
         );
 
         obj.ShouldBe(43);
+    }
+
+    [Test]
+    public void Invoke_Variable_NotFound()
+    {
+        Execute("Show-Elapsed { } -Variable nonexistent");
+    }
+
+    [Test]
+    public void Invoke_Stop()
+    {
+        Execute(
+            """
+            Show-Elapsed { $StopProcessing.Invoke() } `
+                -Variable "`0🚧TEST🚧 StopProcessing"
+            """
+        );
     }
 
     private const string

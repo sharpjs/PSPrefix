@@ -169,6 +169,12 @@ public class ShowPrefixedCommandTests : CommandTests
     }
 
     [Test]
+    public void Invoke_Module_NotFound()
+    {
+        Execute("Show-Prefixed Foo { } -Module nonexistent");
+    }
+
+    [Test]
     public void Invoke_Variable()
     {
         ExecuteYields<int>(
@@ -179,6 +185,23 @@ public class ShowPrefixedCommandTests : CommandTests
                 -Variable (Get-Variable x), y
             """,
             x => x.ShouldBe(45)
+        );
+    }
+
+    [Test]
+    public void Invoke_Variable_NotFound()
+    {
+        Execute("Show-Prefixed Foo { } -Variable nonexistent");
+    }
+
+    [Test]
+    public void Invoke_Stop()
+    {
+        Execute(
+            """
+            Show-Prefixed Foo { $StopProcessing.Invoke() } `
+                -Variable "`0🚧TEST🚧 StopProcessing"
+            """
         );
     }
 
