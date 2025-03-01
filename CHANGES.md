@@ -12,7 +12,7 @@ Most lines should begin with one of these words:
 Future release.
 -->
 
-## [Unreleased](https://github.com/sharpjs/PSPrefix/compare/release/1.0.0..HEAD)
+## [1.0.1](https://github.com/sharpjs/PSPrefix/compare/release/1.0.0..release/1.0.1)
 - Fix `Show-Elapsed` and `Show-Prefixed` ignoring Ctrl+C.
 
 ## [1.0.0](https://github.com/sharpjs/PSPrefix/tree/release/1.0.0)
